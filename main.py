@@ -1,29 +1,31 @@
 """Главное меню выбора игр"""
 
-from guess_progression import play_guess_progression
-from find_lcm import play_find_lcm
+from guess_progression import game_config as progression_game
+from find_lcm import game_config as lcm_game
+from run_game import run_game
 
-def show_menu() -> str:
+def show_menu(games: dict) -> str:
     """Отображает главное меню и возвращает выбор пользователя"""
     print("\nВыберите игру:")
-    print("1. Угадай число в прогрессии")
-    print("2. Вычисли НОК трех чисел")
+    for key, config in games.items():
+        print(f"{key}. {config['name']}")
     print("0. Выход")
     return input("> ").strip()
 
 def main():
     """Основная функция запуска приложения"""
     games = {
-        "1": ("Угадай число в прогрессии", play_guess_progression),
-        "2": ("Вычисли НОК трех чисел", play_find_lcm)
+        "1": progression_game,
+        "2": lcm_game
     }
 
     while True:
-        choice = show_menu()
+        choice = show_menu(games)
         if choice == "0":
             break
         if choice in games:
-            games[choice][1]()
+            game_config = games[choice]
+            run_game(game_config)
         else:
             print("Неверный ввод! Попробуйте снова.")
 

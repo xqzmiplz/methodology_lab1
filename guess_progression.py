@@ -1,7 +1,6 @@
-"""Игра 'Угадай пропущенное число в прогрессии'"""
+"""Игра 'Угадай пропущенное число прогрессии'"""
 
 import random
-from utils import print_message, read_number
 
 def generate_progression():
     """Генерирует арифметическую прогрессию с пропущенным элементом"""
@@ -14,17 +13,10 @@ def generate_progression():
     progression[hidden_idx] = ".."
     return progression, answer
 
-def play_guess_progression():
-    """Запускает игру с 3 раундами"""
-    print_message("\n=== Угадай число в прогрессии ===")
-    correct = 0
-    for _ in range(3):
-        progression, answer = generate_progression()
-        print_message("Прогрессия: " + " ".join(map(str, progression)))
-        user_answer = read_number("Введите пропущенное число: ")
-        if user_answer == answer:
-            correct += 1
-            print_message("Верно!")
-        else:
-            print_message(f"Неверно! Правильный ответ: {answer}")
-    print_message(f"\nИгра завершена! Правильных ответов: {correct}/3")
+game_config = {
+    'name': 'Угадай число в прогрессии',
+    'rounds': 3,
+    'generate_round': generate_progression,
+    'format_question': lambda data: "Прогрессия: " + " ".join(map(str, data)),
+    'prompt': 'Введите пропущенное число: '
+}
